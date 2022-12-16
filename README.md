@@ -1,7 +1,32 @@
 # Weed detection using MaskRCNN
 This repository contains the project details for Group 7, Term 3, Big Data Analytics at Lambton College.
 
+# Introduction to CNN:
+ConvNets are the superheroes that took working with images in deep learning to the next level. With ConvNets, the input is an image ,or more specifically, a 3D Matrix. In simple word what CNN does is, it extract the feature of image and convert it into lower dimension without losing its characteristics
+
+# Transfer Learning:
+Transfer learning makes use of the knowledge gained while solving one problem and applying it to a different but related problem.
+For example, knowledge gained while learning to recognize cars can be used to some extent to recognize trucks.
+
+# Background of MaskRCNN
+
+- RCNN
+- FastRCNN
+- FasterRCNN
+- Network Backbone
+
+- Region Proposal Network
+- RoI(Region of Interest)  Pooling
+- RoI(Region of Interest) Align
+
+- Network Head
+- Classification and Detection
+- Segmentation
+
+
 ### Dataset Building
+The main dataset used by MaskRCNN is MS COCO dataset which has 80 classes and 115 thousand training images.Evaluation metrics for bounding boxes and segmentation mask is based on Intersection over Union.We use the pretrained weight that model has learned on this datasets and used to train with our own datasets.
+
 Our dataset consists of 202 images in which 183 images were used for training and 19 images for validation.
 Since we are going to train an instance segmentation model that should have pixel level accuracy it's important to annotate the 
 images properly this has used [VGG Image Annotator](http://www.robots.ox.ac.uk/~vgg/software/via/) tool for this purpose. We took this
