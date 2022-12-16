@@ -35,7 +35,7 @@ data from [GITHUB](https://github.com/AjinJayan/weed_detection/blob/master/datas
 ### Model Weights and Tensorboard Logs
 [Pre-trained weight](https://drive.google.com/file/) --to be updated
 
-weed_detection.ipynb    ---- This notebook goes in depth into the steps performed to detect and segment objects. It provides visualizations of every step of the pipeline.
+weed_detection_maskrcnn.ipynb    ---- This notebook goes in depth into the steps performed to detect and segment objects. It provides visualizations of every step of the pipeline.
 
 weed_training.py ---- This file is the sub-class of the config.py file in the mrcnn module.You can edit this file to tweak the hyperparameters like leaning rate,no.of iteration etc.You can also add custom callbacks from tf.keras for custom logging into tensorboard
 
