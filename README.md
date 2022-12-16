@@ -33,7 +33,7 @@ images properly this has used [VGG Image Annotator](http://www.robots.ox.ac.uk/~
 data from [GITHUB](https://github.com/AjinJayan/weed_detection/blob/master/dataset_updated.zip).
 
 ### Model Weights and Tensorboard Logs
-[Pre-trained weight](https://drive.google.com/file/) --to be updated
+[Pre-trained weight](https://drive.google.com/file/d/11XssW0dkMGfxsFWM-zp_DxICXsLqnGtf/view?usp=sharing) --to be updated
 
 weed_detection_maskrcnn.ipynb    ---- This notebook goes in depth into the steps performed to detect and segment objects. It provides visualizations of every step of the pipeline.
 
