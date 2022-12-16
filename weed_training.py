@@ -11,7 +11,6 @@ Mask R-CNN
 Train on the weed dataset dataset for detecting weeds.
 Copyright (c) 2018 Matterport, Inc.
 Licensed under the MIT License (see LICENSE for details)
-Written by Ajin J and Abel C Dixon
 ------------------------------------------------------------
 Usage: import the module (see Jupyter notebooks for examples), or run from
        the command line as such:
@@ -66,16 +65,16 @@ class CustomConfig(Config):
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
-    IMAGES_PER_GPU = 2
+    IMAGES_PER_GPU = 1
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + 1+1  # Background + weed+crop
+    NUM_CLASSES = 1 + 1  # Background + toy
 
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 100
 
     # Skip detections with < 90% confidence
-    DETECTION_MIN_CONFIDENCE = 0.7
+    DETECTION_MIN_CONFIDENCE = 0.9
 
 
 ############################################################
@@ -91,7 +90,6 @@ class CustomDataset(utils.Dataset):
         """
         # Add classes. We have only one class to add.
         self.add_class("weed", 1, "weed")
-        self.add_class("weed", 2, "crop")
 
         # Train or validation dataset?
         assert subset in ["train", "val"]
@@ -112,9 +110,9 @@ class CustomDataset(utils.Dataset):
         #   'size': 100202
         # }
         # We mostly care about the x and y coordinates of each region
-        annotations = json.load(open(os.path.join(dataset_dir, "via_region_data.json")))
+        annotations1 = json.load(open(os.path.join(dataset_dir, "via_region_data.json")))
         # print(annotations1)
-        annotations = list(annotations.values())  # don't need the dict keys
+        annotations = list(annotations1.values())  # don't need the dict keys
 
         # The VIA tool saves images in the JSON even if they don't have any
         # annotations. Skip unannotated images.
@@ -126,14 +124,13 @@ class CustomDataset(utils.Dataset):
             # Get the x, y coordinaets of points of the polygons that make up
             # the outline of each object instance. There are stores in the
             # shape_attributes (see json format above)
-            polygons = [r['shape_attributes'] for r in a['regions']]
-            weed  = [s['region_attributes'] for s in a['regions']]
+            polygons = [r['shape_attributes'] for r in a['regions'].values()]
+
             # load_mask() needs the image size to convert polygons to masks.
             # Unfortunately, VIA doesn't include it in JSON, so we must read
             # the image. This is only managable since the dataset is tiny.
-            num_ids=[(1 if n['weed']=='weed' else 2) for n in weed]
             image_path = os.path.join(dataset_dir, a['filename'])
-            image = skimage.io.imread(image_path,plugin="pil")
+            image = skimage.io.imread(image_path)
             height, width = image.shape[:2]
 
             self.add_image(
@@ -141,8 +138,7 @@ class CustomDataset(utils.Dataset):
                 image_id=a['filename'],  # use file name as a unique image id
                 path=image_path,
                 width=width, height=height,
-                polygons=polygons,
-                num_ids=num_ids)
+                polygons=polygons)
 
     def load_mask(self, image_id):
         """Generate instance masks for an image.
@@ -152,25 +148,23 @@ class CustomDataset(utils.Dataset):
         class_ids: a 1D array of class IDs of the instance masks.
         """
         # If not a weed dataset image, delegate to parent class.
-        info = self.image_info[image_id]
-        if info["source"] != "weed":
+        image_info = self.image_info[image_id]
+        if image_info["source"] != "weed":
             return super(self.__class__, self).load_mask(image_id)
 
         # Convert polygons to a bitmap mask of shape
         # [height, width, instance_count]
-        num_ids=info['num_ids']
+        info = self.image_info[image_id]
         mask = np.zeros([info["height"], info["width"], len(info["polygons"])],
                         dtype=np.uint8)
         for i, p in enumerate(info["polygons"]):
             # Get indexes of pixels inside the polygon and set them to 1
             rr, cc = skimage.draw.polygon(p['all_points_y'], p['all_points_x'])
             mask[rr, cc, i] = 1
-        
-       
-        num_ids=np.array(num_ids,dtype=np.int32)
+
         # Return mask, and array of class IDs of each instance. Since we have
         # one class ID only, we return an array of 1s
-        return mask,num_ids
+        return mask.astype(bool), np.ones([mask.shape[-1]], dtype=np.int32)
 
     def image_reference(self, image_id):
         """Return the path of the image."""
@@ -200,7 +194,7 @@ def train(model):
     print("Training network heads")
     model.train(dataset_train, dataset_val,
                 learning_rate=config.LEARNING_RATE,
-                epochs=5,
+                epochs=1,
                 layers='heads')
 
 
@@ -231,7 +225,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
         # Run model detection and generate the color splash effect
         print("Running on {}".format(args.image))
         # Read image
-        image = skimage.io.imread(args.image,plugin="pil")
+        image = skimage.io.imread(args.image)
         # Detect objects
         r = model.detect([image], verbose=1)[0]
         # Color splash
