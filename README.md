@@ -9,11 +9,7 @@ images properly we have used [VGG Image Annotator](http://www.robots.ox.ac.uk/~v
 ### Model Weights and Tensorboard Logs
 [Pre-trained weight](https://drive.google.com/file/) --to be updated
 
-[Tensorboard Logs](https://drive.google.com/file/) - to be updated
-
-inspect_weed_data.ipynb  ---- This notebook visualizes the different pre-processing steps to prepare the training data.
-
-weed_detection1.ipynb    ---- This notebook goes in depth into the steps performed to detect and segment objects. It provides visualizations of every step of the pipeline.
+weed_detection.ipynb    ---- This notebook goes in depth into the steps performed to detect and segment objects. It provides visualizations of every step of the pipeline.
 
 weed_training.py ---- This file is the sub-class of the config.py file in the mrcnn module.You can edit this file to tweak the hyperparameters like leaning rate,no.of iteration etc.You can also add custom callbacks from tf.keras for custom logging into tensorboard
 
