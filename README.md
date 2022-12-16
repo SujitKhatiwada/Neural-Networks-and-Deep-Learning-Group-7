@@ -4,7 +4,8 @@ This repository contains the project details for Group 7, Term 3, Big Data Analy
 ### Dataset Building
 Our dataset consists of 202 images in which 183 images were used for training and 19 images for validation.
 Since we are going to train an instance segmentation model that should have pixel level accuracy it's important to annotate the 
-images properly we have used [VGG Image Annotator](http://www.robots.ox.ac.uk/~vgg/software/via/) tool for this purpose.
+images properly this has used [VGG Image Annotator](http://www.robots.ox.ac.uk/~vgg/software/via/) tool for this purpose. We took this
+data from [GITHUB](https://github.com/AjinJayan/weed_detection/blob/master/dataset_updated.zip).
 
 ### Model Weights and Tensorboard Logs
 [Pre-trained weight](https://drive.google.com/file/) --to be updated
