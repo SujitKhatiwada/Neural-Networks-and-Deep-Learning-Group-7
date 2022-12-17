@@ -23,6 +23,15 @@ For example, knowledge gained while learning to recognize cars can be used to so
 - Classification and Detection
 - Segmentation
 
+#Mask R-CNN architecture
+Mask R-CNN is a state of the art model for instance segmentation, developed on top of Faster R-CNN. Faster R-CNN is a region-based convolutional neural networks [2], that returns bounding boxes for each object and its class label with a confidence score.
+
+To understand Mask R-CNN, let's first discus architecture of Faster R-CNN that works in two stages:
+
+Stage1: The first stage consists of two networks, backbone (ResNet, VGG, Inception, etc..) and region proposal network. These networks run once per image to give a set of region proposals. Region proposals are regions in the feature map which contain the object.
+
+Stage2: In the second stage, the network predicts bounding boxes and object class for each of the proposed region obtained in stage1. Each proposed region can be of different size whereas fully connected layers in the networks always require fixed size vector to make predictions. Size of these proposed regions is fixed by using either RoI pool (which is very similar to MaxPooling) or RoIAlign method.
+
 
 ### Dataset Building
 The main dataset used by MaskRCNN is MS COCO dataset which has 80 classes and 115 thousand training images.Evaluation metrics for bounding boxes and segmentation mask is based on Intersection over Union.We use the pretrained weight that model has learned on this datasets and used to train with our own datasets.
