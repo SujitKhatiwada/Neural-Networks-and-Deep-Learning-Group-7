@@ -23,6 +23,14 @@ For example, knowledge gained while learning to recognize cars can be used to so
 - Classification and Detection
 - Segmentation
 
+# Image Segmentation
+Classification: There is a balloon in this image.
+Semantic Segmentation: These are all the balloon pixels.
+Object Detection: There are 7 balloons in this image at these locations. We’re starting to account for objects that overlap.
+Instance Segmentation: There are 7 balloons at these locations, and these are the pixels that belong to each one.
+![alt text]([http://url/to/img.png](https://miro.medium.com/max/828/1*-zw_Mh1e-8YncnokbAFWxg.webp))
+
+
 # Mask R-CNN architecture
 Mask R-CNN is a state of the art model for instance segmentation, developed on top of Faster R-CNN. Faster R-CNN is a region-based convolutional neural networks [2], that returns bounding boxes for each object and its class label with a confidence score.
 
