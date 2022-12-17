@@ -23,7 +23,7 @@ For example, knowledge gained while learning to recognize cars can be used to so
 - Classification and Detection
 - Segmentation
 
-#Mask R-CNN architecture
+# Mask R-CNN architecture
 Mask R-CNN is a state of the art model for instance segmentation, developed on top of Faster R-CNN. Faster R-CNN is a region-based convolutional neural networks [2], that returns bounding boxes for each object and its class label with a confidence score.
 
 To understand Mask R-CNN, let's first discus architecture of Faster R-CNN that works in two stages:
